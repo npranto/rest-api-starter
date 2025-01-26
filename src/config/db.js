@@ -10,10 +10,8 @@ const connectDB = async () => {
     console.error('MongoDB Connection: FAILED 🚨', error);
     process.exit(1);
   }
-}
+};
 
 connectDB();
 
 module.exports = mongoose;
-
-
