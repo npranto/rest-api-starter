@@ -4,7 +4,8 @@
   "description": "A RESTful API starter to perform basic CRUD operations to databases",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "npx prettier --write src"
   },
   "keywords": [
     "api",
@@ -20,6 +21,7 @@
     "mongoose": "^8.9.5"
   },
   "devDependencies": {
-    "nodemon": "^3.1.9"
+    "nodemon": "^3.1.9",
+    "prettier": "^3.4.2"
   }
 }
