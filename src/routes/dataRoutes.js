@@ -1,8 +1,7 @@
-// Define all routes related to data here...
-
 const express = require('express');
-const router = express.Router();
 const dataController = require('../controllers/dataController');
+
+const router = express.Router();
 
 router.post('/', dataController.createData);
 router.get('/', dataController.getAllData);

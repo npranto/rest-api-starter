@@ -1,4 +1,3 @@
-// Handle all CRUD operations related to data here...
 const Data = require('../models/dataModel');
 
 // create
@@ -92,7 +91,7 @@ exports.updateData = async (req, res) => {
 // delete (by id)
 exports.deleteData = async (req, res) => {
   try {
-    const deletedData = Data.findByIdAndDelete(req.params?.id);
+    const deletedData = await Data.findByIdAndDelete(req.params?.id);
     if (!deletedData) {
       return res.status(404).json({
         message: 'Data Deletion By Id: FAILED 🚨',

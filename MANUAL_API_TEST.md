@@ -1,10 +1,14 @@
-# RESTful API Starter
+# Manual API Test Documentation
 
-A RESTful API starter to perform basic CRUD operations to databases.
+## Prerequisites
 
-## API Documentation
+Before testing the API, ensure the following:
 
-### Routes
+- **MongoDB** is set up and connected to your app (via MongoDB Atlas).
+- Your app is running and accessible through the local server (`http://localhost:9000` or another port if specified).
+- You have a tool like **Postman** or **cURL** to make HTTP requests. Postman is recommended.
+
+## Routes
 
 All available routes for `Data` for CRUD operations:
 
@@ -14,9 +18,9 @@ All available routes for `Data` for CRUD operations:
 - **PATCH** `/api/v1/data/:id` - Update a data entry by ID.
 - **DELETE** `/api/v1/data/:id` - Delete a data entry by ID.
 
-### POST : `/api/v1/data`
+## Route Testing
 
-> Create a new data entry on the Database
+### 1. Create Data (POST `/api/v1/data`)
 
 #### Request
 
@@ -62,9 +66,7 @@ Example request body:
   }
   ```
 
-### GET : `/api/v1/data`
-
-> Retrieve all data by `type`, i.e., "`?type=user`" from the database
+### 2. Retrieve All Data (GET `/api/v1/data`)
 
 #### Request
 
@@ -103,9 +105,7 @@ http://localhost:9000/api/v1/data?type=user
   }
   ```
 
-### GET : `/api/v1/data/:id`
-
-> Retrieve data by id from the database
+### 3. Retrieve Data by ID (GET `/api/v1/data/:id`)
 
 #### Request
 
@@ -141,9 +141,7 @@ http://localhost:9000/api/v1/data/60ccf1b2d5c4d051c8d4e20c
   }
   ```
 
-### PATCH : `/api/v1/data/:id`
-
-> Update data by id from the database
+### 4. Update Data by ID (PATCH `/api/v1/data/:id`)
 
 #### Request
 
@@ -189,9 +187,7 @@ Example request body:
   }
   ```
 
-### DELETE : `/api/v1/data/:id`
-
-> Delete data by id from the database
+### 5. Delete Data by ID (DELETE `/api/v1/data/:id`)
 
 #### Request
 
@@ -253,3 +249,7 @@ Example error response:
 | GET    | `/api/v1/data/:id` | Retrieve data by ID       | `:`id`                                                | 200 OK with a single data entry      |
 | PATCH  | `/api/v1/data/:id` | Update data by ID         | `{ "type": "user", "data": {...}, "metadata": {...}}` | 200 OK with updated data             |
 | DELETE | `/api/v1/data/:id` | Delete data by ID         | N/A                                                   | 200 OK with deleted data             |
+
+## Conclusion
+
+By following this guide, you can manually test all CRUD operations on your data API using Postman or cURL. This will ensure your routes are working as expected, and you can perform data manipulations (create, read, update, delete) directly from your API.

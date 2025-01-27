@@ -1,4 +1,3 @@
-// Define schema for data model here...
 const mongoose = require('mongoose');
 
 const dataSchema = new mongoose.Schema(
