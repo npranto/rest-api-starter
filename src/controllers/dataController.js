@@ -89,6 +89,7 @@ exports.updateData = async (req, res) => {
   }
 };
 
+// delete (by id)
 exports.deleteData = async (req, res) => {
   try {
     const deletedData = Data.findByIdAndDelete(req.params?.id);
