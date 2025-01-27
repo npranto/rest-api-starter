@@ -259,3 +259,107 @@ Example error response:
 | GET    | `/api/v1/data/:id` | Retrieve data by ID       | `:`id`                                                | 200 OK with a single data entry      |
 | PATCH  | `/api/v1/data/:id` | Update data by ID         | `{ "type": "user", "data": {...}, "metadata": {...}}` | 200 OK with updated data             |
 | DELETE | `/api/v1/data/:id` | Delete data by ID         | N/A                                                   | 200 OK with deleted data             |
+
+/////////////////////
+
+## How To Use This Repository?
+
+This repository is designed to be a forkable starting point for developers to:
+
+1. Quickly connect to a NoSQL database using MongoDB Atlas.
+2. Build and deploy a RESTful API without setting up boilerplate code from scratch.
+3. Easily deploy the API to production via platforms as AWS or Render.
+
+This starter API provides a simple yet scalable foundation for creating RESTful APIs, making it easy to customize and extend according to your needs. By default, you can CREATE any types of data (i.e., users, posts, comments, products), READ that data, UPDATE that data and of course, DELETE that data.
+
+### Getting Started
+
+#### 1. Fork This Repository
+
+1. Go to the GitHub repository page.
+2. Click the **Fork** button at the top right corner to create your own copy of the repository.
+3. Clone the forked repository to your local machine using:
+   ```bash
+   git clone <your-forked-repo-url>
+   ```
+
+#### 2. Create a New MongoDB Atlas Account and Cluster
+
+1. Go to [MongoDB Atlas](https://www.mongodb.com/atlas) and sign up for a free account if you don't already have one.
+2. Create a new database cluster by following these steps:
+   - Click **Build a Cluster** and choose a cloud provider and region (free tier available).
+   - Once the cluster is created, click **Connect** and follow the steps to:
+     - Whitelist your IP address (or choose "Allow access from anywhere").
+     - Create a new database user with a username and password.
+3. Copy the connection string (URI) provided by MongoDB Atlas.
+
+#### 3. Create the `.env.development` File
+
+At the root of your project, create a new file named `.env.development` and replace the placeholders with your actual values:
+
+```env
+PORT="9000"
+DATABASE="mongodb"
+MONGO_URI="<your-mongodb-connection-uri>"
+NODE_ENV="development"  # Optional, defaults to 'development'
+```
+
+Note, you can create additional .env variable files based on the environment such as `.env.test` or `.env.production`, that way you can use different databases for different env as well.
+
+##### Example `MONGO_URI`
+
+For example, if your MongoDB Atlas username is `admin` and password is `password123`, your URI might look like this:
+
+```env
+MONGO_URI="mongodb+srv://admin:password123@cluster0.mongodb.net/?retryWrites=true&w=majority"
+```
+
+> **Important:** Do not hardcode sensitive information like passwords directly into your codebase. For production, use environment secrets provided by your deployment platform.
+
+#### 4. Start Local Development
+
+To start the development server locally:
+
+1. Install the dependencies:
+   ```bash
+   npm install
+   ```
+2. Run the development server:
+   ```bash
+   npm run dev
+   ```
+3. The server should now be running at `http://localhost:9000`. You can test the API endpoints using tools like [Postman](https://www.postman.com/) or [cURL](https://curl.se/).
+
+#### 5. Deploy API to Production
+
+You can deploy the API to a production environment using either **Render** or **AWS**:
+
+##### Deploying to Render
+
+1. Go to [Render](https://render.com/) and create an account.
+2. Create a new **Web Service**:
+   - Connect your forked GitHub repository.
+   - Add the environment variables (`PORT`, `DATABASE`, `MONGO_URI`, `NODE_ENV`) under the **Environment** tab.
+   - Set the **Start Command** to `npm start`.
+3. Render will automatically build and deploy your API.
+
+##### Deploying to AWS
+
+1. Set up an AWS account if you don’t already have one.
+2. Use AWS Elastic Beanstalk or AWS Lambda to deploy your API:
+   - For **Elastic Beanstalk**:
+     - Package your app, upload it, and configure the environment variables (`PORT`, `DATABASE`, `MONGO_URI`, `NODE_ENV`).
+     - AWS will handle the deployment and scaling.
+   - For **Lambda + API Gateway**:
+     - Use tools like [Serverless Framework](https://www.serverless.com/) or [AWS SAM](https://aws.amazon.com/serverless/sam/) to deploy your API.
+     - Set up your MongoDB Atlas credentials securely in AWS Secrets Manager.
+
+> **Tip:** Always test the deployment on a staging environment before pushing to production.
+
+## Notes for Developers
+
+- Feel free to customize the API routes, models, and middleware to fit your use case.
+- Regularly review and update dependencies for security.
+- Add automated tests to ensure the API works as expected during development and deployment.
+
+This repository gives you the quickest path to creating and deploying a scalable RESTful API. Hope it helps... enjoy coding! 🚀
