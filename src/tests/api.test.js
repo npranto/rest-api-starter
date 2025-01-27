@@ -1,6 +1,6 @@
 const request = require('supertest');
 
-const APP = 'http://localhost:9000';
+const APP = `http://localhost:${process.env.PORT || 9000}`;
 
 describe('API Endpoints', () => {
   let TEST_DATA = null;
