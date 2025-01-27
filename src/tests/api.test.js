@@ -1,0 +1,80 @@
+const request = require('supertest');
+
+const APP = 'http://localhost:9000';
+
+describe('API Endpoints', () => {
+  let TEST_DATA = null;
+
+  it('should return healthcheck status message', async () => {
+    const response = await request(APP).get('/');
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe('Welcome to Rest API Starter!');
+  });
+
+  it('should create a new data entry in the database', async () => {
+    const newData = {
+      type: '___TEST___',
+      data: { name: 'Bob Myers', email: 'bob.myers@example.com' },
+      metadata: { description: '___DELETE_ASAP___' },
+    };
+
+    const response = await request(APP)
+      .post('/api/v1/data')
+      .send(newData)
+      .set('Content-Type', 'application/json');
+
+    expect(response.status).toBe(201);
+    expect(response.body.message).toBe('Data Creation: SUCCESS 🚀');
+    expect(response.body.data).toHaveProperty('_id');
+    expect(response.body.data.type).toBe(newData.type);
+    expect(response.body.data.data).toEqual(newData.data);
+
+    // store created data for future tests
+    TEST_DATA = response.body.data;
+  });
+
+  it('should retrieve all data of type=___TEST___', async () => {
+    const response = await request(APP).get('/api/v1/data?type=___TEST___');
+
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe('Data Retrieval By Type: SUCCESS 🚀');
+    expect(response.body.data).toBeInstanceOf(Array);
+    expect(response.body.data.length).toBe(1);
+  });
+
+  it('should retrieve data by ID', async () => {
+    const response = await request(APP).get(`/api/v1/data/${TEST_DATA._id}`);
+
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe('Data Retrieval By Id: SUCCESS 🚀');
+    expect(response.body.data._id).toBe(TEST_DATA._id);
+    expect(response.body.data.type).toBe(TEST_DATA.type);
+  });
+
+  it('should update data by ID', async () => {
+    const updatedData = {
+      type: '___TEST___',
+      data: { name: 'Kevin Myers', email: 'kevin.myers@example.com' },
+      metadata: { description: '___DELETE_ASAP___' },
+    };
+
+    const response = await request(APP)
+      .patch(`/api/v1/data/${TEST_DATA._id}`)
+      .send(updatedData)
+      .set('Content-Type', 'application/json');
+
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe('Data Update By Id: SUCCESS 🚀');
+    expect(response.body.data._id).toBe(TEST_DATA._id);
+    expect(response.body.data.type).toBe(TEST_DATA.type);
+    expect(response.body.data.data).toEqual(updatedData.data);
+  });
+
+  it('should delete data by ID', async () => {
+    const response = await request(APP).delete(`/api/v1/data/${TEST_DATA._id}`);
+
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe('Data Deletion By Id: SUCCESS 🚀');
+    expect(response.body.data._id).toBe(TEST_DATA._id);
+  });
+});
