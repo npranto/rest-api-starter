@@ -24,7 +24,7 @@ exports.createData = async (req, res) => {
 };
 
 // read (by type)
-exports.getAllDataByType = async (req, res) => {
+exports.getAllData = async (req, res) => {
   try {
     const filter = req.query?.type ? { type: req.query.type } : {};
     const allData = await Data.find(filter);
@@ -41,7 +41,7 @@ exports.getAllDataByType = async (req, res) => {
 };
 
 // read (by id)
-exports.getDataById = async (req, res) => {
+exports.getData = async (req, res) => {
   try {
     const data = await Data.findById(req.params?.id);
     if (!data) {
@@ -58,6 +58,54 @@ exports.getDataById = async (req, res) => {
     res.status(500).json({
       message: 'Data Retrieval By Id: FAILED 🚨',
       error: error?.message || 'Unable to get data by id 😢',
+    });
+  }
+};
+
+// update (patch only)
+exports.updateData = async (req, res) => {
+  try {
+    const { type, data, metadata } = req.body || {};
+    const updatedData = await Data.findByIdAndUpdate(
+      req.params?.id,
+      { $set: { type, data, metadata } },
+      { new: true, runValidators: true }
+    );
+    if (!updatedData) {
+      return res.status(404).json({
+        message: 'Data Update By Id: FAILED 🚨',
+        data: null,
+      });
+    }
+    res.status(200).json({
+      message: 'Data Update By Id: SUCCESS 🚀',
+      data: updatedData,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: 'Data Update By Id: FAILED 🚨',
+      error: error?.message || 'Unable to update data by id 😢',
+    });
+  }
+};
+
+exports.deleteData = async (req, res) => {
+  try {
+    const deletedData = Data.findByIdAndDelete(req.params?.id);
+    if (!deletedData) {
+      return res.status(404).json({
+        message: 'Data Deletion By Id: FAILED 🚨',
+        data: null,
+      });
+    }
+    res.status(200).json({
+      message: 'Data Deletion By Id: SUCCESS 🚀',
+      data: deletedData,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: 'Data Deletion By Id: FAILED 🚨',
+      error: error?.message || 'Unable to delete data by id 😢',
     });
   }
 };
