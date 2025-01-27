@@ -8,7 +8,7 @@ Before testing the API, ensure the following:
 - Your app is running and accessible through the local server (`http://localhost:9000` or another port if specified).
 - You have a tool like **Postman** or **cURL** to make HTTP requests. Postman is recommended.
 
-## Available Routes
+## Routes
 
 All available routes for `Data` for CRUD operations:
 
