@@ -12,8 +12,6 @@ const PORT = process.env?.PORT || 8080;
  * Establishes a connection to the database.
  * Logs success or failure messages based on the connection status.
  * If the connection fails, the process exits with a non-zero code.
- *
- * @see {@link ./config/db.connect} for more details.
  */
 db.connect({ database: process.env?.DATABASE });
 

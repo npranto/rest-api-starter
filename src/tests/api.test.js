@@ -11,7 +11,7 @@ describe('API Endpoints', () => {
     expect(response.body.message).toBe('Welcome to Rest API Starter!');
   });
 
-  it('should create a new data entry in the database', async () => {
+  it('should create a new data entry into database', async () => {
     const newData = {
       type: '___TEST___',
       data: { name: 'Bob Myers', email: 'bob.myers@example.com' },
@@ -33,7 +33,7 @@ describe('API Endpoints', () => {
     TEST_DATA = response.body.data;
   });
 
-  it('should retrieve all data of type=___TEST___', async () => {
+  it('should retrieve all data of `type=___TEST___` from database', async () => {
     const response = await request(APP).get('/api/v1/data?type=___TEST___');
 
     expect(response.status).toBe(200);
@@ -42,7 +42,7 @@ describe('API Endpoints', () => {
     expect(response.body.data.length).toBe(1);
   });
 
-  it('should retrieve data by ID', async () => {
+  it('should retrieve data by ID from database', async () => {
     const response = await request(APP).get(`/api/v1/data/${TEST_DATA._id}`);
 
     expect(response.status).toBe(200);
@@ -51,7 +51,7 @@ describe('API Endpoints', () => {
     expect(response.body.data.type).toBe(TEST_DATA.type);
   });
 
-  it('should update data by ID', async () => {
+  it('should update data by ID inside database', async () => {
     const updatedData = {
       type: '___TEST___',
       data: { name: 'Kevin Myers', email: 'kevin.myers@example.com' },
@@ -70,7 +70,7 @@ describe('API Endpoints', () => {
     expect(response.body.data.data).toEqual(updatedData.data);
   });
 
-  it('should delete data by ID', async () => {
+  it('should delete data by ID from database', async () => {
     const response = await request(APP).delete(`/api/v1/data/${TEST_DATA._id}`);
 
     expect(response.status).toBe(200);
