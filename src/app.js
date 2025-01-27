@@ -10,6 +10,11 @@ app.use(cors());
 app.use(express.json());
 
 // routes
+app.get('/', (_, res) =>
+  res.status(200).json({
+    message: 'Welcome to Rest API Starter!',
+  })
+);
 app.use('/api/v1/data', require('./routes/dataRoutes'));
 
 module.exports = app;

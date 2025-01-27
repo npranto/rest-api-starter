@@ -1,5 +1,3 @@
-// Add code for database connection here...
-
 const mongoose = require('mongoose');
 
 const connectDB = async () => {
