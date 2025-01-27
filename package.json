@@ -4,9 +4,9 @@
   "description": "A RESTful API starter to perform basic CRUD operations to databases",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/server.js",
-    "start": "node src/server.js",
-    "test": "jest",
+    "dev": "NODE_ENV=development nodemon src/server.js",
+    "start": "NODE_ENV=production node src/server.js",
+    "test": "NODE_ENV=test jest --runInBand",
     "format": "npx prettier --write src",
     "prepare": "husky",
     "pre-commit": "lint-staged"

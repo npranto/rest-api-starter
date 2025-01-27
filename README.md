@@ -1,6 +1,12 @@
-# RESTful API Starter
+<h1 align="center">
+  <br>
+  <img src="./assets/ras-logo.png" alt="RAS" width="200px">
+  <br>
+    Rest API Starter
+  <br>
+</h1>
 
-A RESTful API starter to perform basic CRUD operations to databases.
+A RESTful API starter to perform basic CRUD operations on a database
 
 ## API Documentation
 
