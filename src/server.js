@@ -1,15 +1,28 @@
-require('dotenv').config();
-require('./config/db');
+const dotenv = require('dotenv');
+const db = require('./config/db');
 const app = require('./app');
 
-const PORT = process.env.PORT || 8080;
+const env = process.env.NODE_ENV || 'development';
+dotenv.config({ path: `.env.${env}` });
+console.log(`Environment: ${env}`);
+
+const PORT = process.env?.PORT || 8080;
 
 /**
- * Starts the Express server. If the server fails to start, logs an error message, otherwise logs success message
+ * Establishes a connection to the database.
+ * Logs success or failure messages based on the connection status.
+ * If the connection fails, the process exits with a non-zero code.
+ *
+ * @see {@link ./config/db.connect} for more details.
+ */
+db.connect({ database: process.env?.DATABASE });
+
+/**
+ * Starts the Express server. If the server fails to start, logs an error message, otherwise logs success message.
  *
  * @function
  * @name app.listen
- * @param {number} PORT - The port number to listen to on server
+ * @param {number} PORT - The port number to listen on for server requests.
  * @returns {void}
  */
 app.listen(PORT, (err) => {
