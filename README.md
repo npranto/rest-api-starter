@@ -260,8 +260,6 @@ Example error response:
 | PATCH  | `/api/v1/data/:id` | Update data by ID         | `{ "type": "user", "data": {...}, "metadata": {...}}` | 200 OK with updated data             |
 | DELETE | `/api/v1/data/:id` | Delete data by ID         | N/A                                                   | 200 OK with deleted data             |
 
-/////////////////////
-
 ## How To Use This Repository?
 
 This repository is designed to be a forkable starting point for developers to:
