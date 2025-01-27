@@ -8,7 +8,7 @@ describe('API Endpoints', () => {
   it('should return healthcheck status message', async () => {
     const response = await request(APP).get('/');
     expect(response.status).toBe(200);
-    expect(response.body.message).toBe('Welcome to Rest API Starter');
+    expect(response.body.message).toBe('Welcome to Rest API Starter!');
   });
 
   it('should create a new data entry into database', async () => {
