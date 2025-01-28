@@ -1,5 +1,5 @@
 const dotenv = require('dotenv');
-const db = require('./config/db');
+const db = require('./config/db.config');
 const app = require('./app');
 
 const env = process.env.NODE_ENV || 'development';
