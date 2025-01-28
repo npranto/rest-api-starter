@@ -1,7 +1,5 @@
 const express = require('express');
 const cors = require('cors');
-const dataRoutes = require('./routes/data.routes');
-const pkgJSON = require('../package.json');
 
 const app = express();
 
@@ -30,7 +28,7 @@ app.get('/', (_, res) =>
   res.status(200).json({
     message: 'Welcome to Rest API Starter!',
     env: process.env.NODE_ENV,
-    version: pkgJSON?.version,
+    version: require('../package.json')?.version,
   })
 );
 
@@ -39,6 +37,6 @@ app.get('/', (_, res) =>
  *
  * @route /api/v1/data
  */
-app.use('/api/v1/data', dataRoutes);
+app.use('/api/v1/data', require('./routes/data.routes'));
 
 module.exports = app;
