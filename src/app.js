@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const rateLimiter = require('./middlewares/rateLimiter.middleware');
 
 const app = express();
 
@@ -37,6 +38,6 @@ app.get('/', (_, res) =>
  *
  * @route /api/v1/data
  */
-app.use('/api/v1/data', require('./routes/data.routes'));
+app.use('/api/v1/data', rateLimiter(), require('./routes/data.routes'));
 
 module.exports = app;

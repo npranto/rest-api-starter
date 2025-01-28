@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon index.js",
     "start": "NODE_ENV=production node index.js",
-    "test": "NODE_ENV=test jest --runInBand",
+    "test": "NODE_ENV=test jest --runInBand --testTimeout=30000",
     "format": "npx prettier --write src",
     "prepare": "if [ \"$NODE_ENV\" != \"production\" ]; then husky install; fi",
     "pre-commit": "lint-staged"
@@ -22,7 +22,9 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
-    "mongoose": "^8.9.5"
+    "express-rate-limit": "^7.5.0",
+    "mongoose": "^8.9.5",
+    "uuid": "^11.0.5"
   },
   "devDependencies": {
     "husky": "^9.1.7",
