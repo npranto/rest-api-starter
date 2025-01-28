@@ -8,7 +8,7 @@
     "start": "NODE_ENV=production node index.js",
     "test": "NODE_ENV=test jest --runInBand",
     "format": "npx prettier --write src",
-    "prepare": "husky",
+    "prepare": "husky install",
     "pre-commit": "lint-staged"
   },
   "keywords": [
