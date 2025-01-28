@@ -17,7 +17,7 @@ router.post('/', dataController.createData);
 
 /**
  * GET /api/v1/data
- * Retrieves all data entries, optionally filtered by type.
+ * Retrieves all data entries, optionally filtered by `type`.
  *
  * @route GET /api/v1/data
  * @group Data - Operations related to data
