@@ -2,7 +2,7 @@ const request = require('supertest');
 
 const APP = `http://localhost:${process.env.PORT || 9000}`;
 
-describe('API Endpoints', () => {
+describe('API: All Endpoints', () => {
   let TEST_DATA = null;
 
   it('should return healthcheck status message', async () => {
