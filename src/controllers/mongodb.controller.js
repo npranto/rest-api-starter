@@ -104,7 +104,7 @@ exports.getData = async (req, res) => {
  */
 exports.updateData = async (req, res) => {
   try {
-    const { type, data, metadata } = req.body || {};
+    const { type, data, metadata = {} } = req.body || {};
     const updatedData = await MongooseDataModel.findByIdAndUpdate(
       req.params?.id,
       { $set: { type, data, metadata } },
