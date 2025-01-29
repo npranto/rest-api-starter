@@ -108,7 +108,7 @@ const getData = async (req, res) => {
  */
 const updateData = async (req, res) => {
   try {
-    const { type, data, metadata } = req.body || {};
+    const { type, data, metadata = {} } = req.body || {};
     const docRef = FirestoreDB.collection(COLLECTION_NAME).doc(req.params?.id);
 
     const doc = await docRef.get();
