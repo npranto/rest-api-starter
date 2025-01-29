@@ -1,4 +1,5 @@
 const rateLimit = require('express-rate-limit');
+const logger = require('./logger.middleware');
 
 /**
  * Rate limiter middleware to limit number of requests a user can make to API.
@@ -31,11 +32,13 @@ const rateLimiter = ({
   rateLimit({
     windowMs: rateLimitInMilliseconds, // 1 minute
     max: maxRequestsAllowed, // limits each IP to 100 requests per window (or, every 1 min)
-    handler: (_, res) =>
+    handler: (_, res) => {
+      logger.warn(`Rate limit exceeded for IP: ${req.ip} - Too many requests!`);
       res.status(429).json({
         message:
           'Wooh! Too many requests! 🐌 Slow down and try again in a minute 🙂',
-      }),
+      });
+    },
     standardHeaders: true, // returns rate limit info in `RateLimit-*` headers
     legacyHeaders: false, // disables the `X-RateLimit-*` headers
   });

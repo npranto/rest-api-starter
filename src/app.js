@@ -1,5 +1,7 @@
 const express = require('express');
 const cors = require('cors');
+const logger = require('./middlewares/logger.middleware');
+const httpLogger = require('./middlewares/httpLogger.middleware');
 const rateLimiter = require('./middlewares/rateLimiter.middleware');
 
 const start = async () => {
@@ -8,6 +10,14 @@ const start = async () => {
   const app = express();
 
   // MIDDLEWARES
+  /**
+   * Middleware to log HTTP requests using Morgan and Winston.
+   * It logs details for all incoming HTTP requests
+   *
+   * @function
+   */
+  app.use(httpLogger());
+
   /**
    * Middleware to enable CORS (Cross-Origin Resource Sharing).
    * Allows the API to accept requests from different origins.
@@ -28,14 +38,16 @@ const start = async () => {
    * @group Root - Operations related to the root path
    * @returns {object} 200 - A success message indicating that the API is active
    */
-  app.get('/', (_, res) =>
+  app.get('/', (_, res) => {
+    logger.info('Checking the API status: Everything is OK');
+
     res.status(200).json({
       message: 'Welcome to Rest API Starter!',
       env: process.env.NODE_ENV,
       database: process.env.DATABASE,
       version: require('../package.json')?.version,
-    })
-  );
+    });
+  });
 
   /**
    * All routes related to `Data` for CRUD operations
@@ -54,9 +66,15 @@ const start = async () => {
    */
   app.listen(PORT, (err) => {
     if (err) {
-      console.error(`Server Connection [PORT: ${PORT}]: FAILED 🚨`, err);
+      logger.error(
+        `Server Connection [PORT: ${PORT}]: FAILED 🚨`,
+        `${err.message}`,
+        {
+          err,
+        }
+      );
     } else {
-      console.log(`Server Connection [PORT: ${PORT}]: SUCCESS 🚀 `);
+      logger.info(`Server Connection [PORT: ${PORT}]: SUCCESS 🚀 `);
     }
   });
 
