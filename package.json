@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "nodemon index.js",
     "start": "NODE_ENV=production node index.js",
-    "test": "NODE_ENV=test jest --colors --verbose --runInBand --testTimeout=10000",
+    "test:unit": "NODE_ENV=test jest \"src/tests/unit\" --colors --verbose --runInBand --testTimeout=10000",
+    "test:api:mongodb": "NODE_ENV=test jest --testPathPattern=\"src/tests/api/api-mongodb.test.js\" --colors --verbose --runInBand --testTimeout=10000",
+    "test:api:firestore": "NODE_ENV=test jest --testPathPattern=\"src/tests/api/api-firestore.test.js\" --colors --verbose --runInBand --testTimeout=10000",
     "format": "npx prettier --write src",
     "prepare": "if [ \"$NODE_ENV\" != \"production\" ]; then husky install; fi",
     "pre-commit": "lint-staged"
