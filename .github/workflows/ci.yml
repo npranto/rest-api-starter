@@ -1,5 +1,6 @@
 name: Continuous Integration (CI)
 'on':
+  workflow_dispatch: null
   pull_request:
     branches:
       - master
@@ -23,6 +24,17 @@ jobs:
           PORT: '${{ secrets.PORT }}'
           DATABASE: '${{ secrets.DATABASE }}'
           MONGO_URI: '${{ secrets.MONGO_URI }}'
+          FIREBASE_TYPE: '${{ secrets.FIREBASE_TYPE }}'
+          FIREBASE_PROJECT_ID: '${{ secrets.FIREBASE_PROJECT_ID }}'
+          FIREBASE_PRIVATE_KEY_ID: '${{ secrets.FIREBASE_PRIVATE_KEY_ID }}'
+          FIREBASE_PRIVATE_KEY: '${{ secrets.FIREBASE_PRIVATE_KEY }}'
+          FIREBASE_CLIENT_EMAIL: '${{ secrets.FIREBASE_CLIENT_EMAIL }}'
+          FIREBASE_CLIENT_ID: '${{ secrets.FIREBASE_CLIENT_ID }}'
+          FIREBASE_AUTH_URI: '${{ secrets.FIREBASE_AUTH_URI }}'
+          FIREBASE_TOKEN_URI: '${{ secrets.FIREBASE_TOKEN_URI }}'
+          FIREBASE_AUTH_PROVIDER_X509_CERT_URL: '${{ secrets.FIREBASE_AUTH_PROVIDER_X509_CERT_URL }}'
+          FIREBASE_CLIENT_X509_CERT_URL: '${{ secrets.FIREBASE_CLIENT_X509_CERT_URL }}'
+          FIREBASE_UNIVERSE_DOMAIN: '${{ secrets.FIREBASE_UNIVERSE_DOMAIN }}'
           NODE_ENV: test
       - name: Run tests
         run: npm run test
@@ -30,4 +42,15 @@ jobs:
           PORT: '${{ secrets.PORT }}'
           DATABASE: '${{ secrets.DATABASE }}'
           MONGO_URI: '${{ secrets.MONGO_URI }}'
+          FIREBASE_TYPE: '${{ secrets.FIREBASE_TYPE }}'
+          FIREBASE_PROJECT_ID: '${{ secrets.FIREBASE_PROJECT_ID }}'
+          FIREBASE_PRIVATE_KEY_ID: '${{ secrets.FIREBASE_PRIVATE_KEY_ID }}'
+          FIREBASE_PRIVATE_KEY: '${{ secrets.FIREBASE_PRIVATE_KEY }}'
+          FIREBASE_CLIENT_EMAIL: '${{ secrets.FIREBASE_CLIENT_EMAIL }}'
+          FIREBASE_CLIENT_ID: '${{ secrets.FIREBASE_CLIENT_ID }}'
+          FIREBASE_AUTH_URI: '${{ secrets.FIREBASE_AUTH_URI }}'
+          FIREBASE_TOKEN_URI: '${{ secrets.FIREBASE_TOKEN_URI }}'
+          FIREBASE_AUTH_PROVIDER_X509_CERT_URL: '${{ secrets.FIREBASE_AUTH_PROVIDER_X509_CERT_URL }}'
+          FIREBASE_CLIENT_X509_CERT_URL: '${{ secrets.FIREBASE_CLIENT_X509_CERT_URL }}'
+          FIREBASE_UNIVERSE_DOMAIN: '${{ secrets.FIREBASE_UNIVERSE_DOMAIN }}'
           NODE_ENV: test
