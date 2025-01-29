@@ -1,10 +1,11 @@
-name: Continuous Integration (CI)
+name: CI | Tests
 'on':
+  workflow_dispatch:
   pull_request:
     branches:
       - master
 jobs:
-  test:
+  test-unit:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -15,7 +16,20 @@ jobs:
           node-version: 22
       - name: Install dependencies
         run: npm ci
-      - name: Start up application
+      - name: Run tests
+        run: npm run test:unit
+  test-api-mongodb:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22
+      - name: Install dependencies
+        run: npm ci
+      - name: Start app
         run: |
           npm run dev &
           sleep 10 # Allow server to stabilize
@@ -23,11 +37,82 @@ jobs:
           PORT: '${{ secrets.PORT }}'
           DATABASE: '${{ secrets.DATABASE }}'
           MONGO_URI: '${{ secrets.MONGO_URI }}'
+          FIREBASE_TYPE: '${{ secrets.FIREBASE_TYPE }}'
+          FIREBASE_PROJECT_ID: '${{ secrets.FIREBASE_PROJECT_ID }}'
+          FIREBASE_PRIVATE_KEY_ID: '${{ secrets.FIREBASE_PRIVATE_KEY_ID }}'
+          FIREBASE_PRIVATE_KEY: '${{ secrets.FIREBASE_PRIVATE_KEY }}'
+          FIREBASE_CLIENT_EMAIL: '${{ secrets.FIREBASE_CLIENT_EMAIL }}'
+          FIREBASE_CLIENT_ID: '${{ secrets.FIREBASE_CLIENT_ID }}'
+          FIREBASE_AUTH_URI: '${{ secrets.FIREBASE_AUTH_URI }}'
+          FIREBASE_TOKEN_URI: '${{ secrets.FIREBASE_TOKEN_URI }}'
+          FIREBASE_AUTH_PROVIDER_X509_CERT_URL: '${{ secrets.FIREBASE_AUTH_PROVIDER_X509_CERT_URL }}'
+          FIREBASE_CLIENT_X509_CERT_URL: '${{ secrets.FIREBASE_CLIENT_X509_CERT_URL }}'
+          FIREBASE_UNIVERSE_DOMAIN: '${{ secrets.FIREBASE_UNIVERSE_DOMAIN }}'
           NODE_ENV: test
-      - name: Run tests
-        run: npm run test
+      - name: Run API tests w/ MongoDB
+        run: npm run test:api:mongodb
         env:
           PORT: '${{ secrets.PORT }}'
           DATABASE: '${{ secrets.DATABASE }}'
           MONGO_URI: '${{ secrets.MONGO_URI }}'
+          FIREBASE_TYPE: '${{ secrets.FIREBASE_TYPE }}'
+          FIREBASE_PROJECT_ID: '${{ secrets.FIREBASE_PROJECT_ID }}'
+          FIREBASE_PRIVATE_KEY_ID: '${{ secrets.FIREBASE_PRIVATE_KEY_ID }}'
+          FIREBASE_PRIVATE_KEY: '${{ secrets.FIREBASE_PRIVATE_KEY }}'
+          FIREBASE_CLIENT_EMAIL: '${{ secrets.FIREBASE_CLIENT_EMAIL }}'
+          FIREBASE_CLIENT_ID: '${{ secrets.FIREBASE_CLIENT_ID }}'
+          FIREBASE_AUTH_URI: '${{ secrets.FIREBASE_AUTH_URI }}'
+          FIREBASE_TOKEN_URI: '${{ secrets.FIREBASE_TOKEN_URI }}'
+          FIREBASE_AUTH_PROVIDER_X509_CERT_URL: '${{ secrets.FIREBASE_AUTH_PROVIDER_X509_CERT_URL }}'
+          FIREBASE_CLIENT_X509_CERT_URL: '${{ secrets.FIREBASE_CLIENT_X509_CERT_URL }}'
+          FIREBASE_UNIVERSE_DOMAIN: '${{ secrets.FIREBASE_UNIVERSE_DOMAIN }}'
+          NODE_ENV: test
+  test-api-firestore:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22
+      - name: Install dependencies
+        run: npm ci
+      - name: Start app
+        run: |
+          npm run dev &
+          sleep 10 # Allow server to stabilize
+        env:
+          PORT: '${{ secrets.PORT }}'
+          DATABASE: firestore
+          MONGO_URI: '${{ secrets.MONGO_URI }}'
+          FIREBASE_TYPE: '${{ secrets.FIREBASE_TYPE }}'
+          FIREBASE_PROJECT_ID: '${{ secrets.FIREBASE_PROJECT_ID }}'
+          FIREBASE_PRIVATE_KEY_ID: '${{ secrets.FIREBASE_PRIVATE_KEY_ID }}'
+          FIREBASE_PRIVATE_KEY: '${{ secrets.FIREBASE_PRIVATE_KEY }}'
+          FIREBASE_CLIENT_EMAIL: '${{ secrets.FIREBASE_CLIENT_EMAIL }}'
+          FIREBASE_CLIENT_ID: '${{ secrets.FIREBASE_CLIENT_ID }}'
+          FIREBASE_AUTH_URI: '${{ secrets.FIREBASE_AUTH_URI }}'
+          FIREBASE_TOKEN_URI: '${{ secrets.FIREBASE_TOKEN_URI }}'
+          FIREBASE_AUTH_PROVIDER_X509_CERT_URL: '${{ secrets.FIREBASE_AUTH_PROVIDER_X509_CERT_URL }}'
+          FIREBASE_CLIENT_X509_CERT_URL: '${{ secrets.FIREBASE_CLIENT_X509_CERT_URL }}'
+          FIREBASE_UNIVERSE_DOMAIN: '${{ secrets.FIREBASE_UNIVERSE_DOMAIN }}'
+          NODE_ENV: test
+      - name: Run API tests w/ Firestore
+        run: npm run test:api:firestore
+        env:
+          PORT: '${{ secrets.PORT }}'
+          DATABASE: firestore
+          MONGO_URI: '${{ secrets.MONGO_URI }}'
+          FIREBASE_TYPE: '${{ secrets.FIREBASE_TYPE }}'
+          FIREBASE_PROJECT_ID: '${{ secrets.FIREBASE_PROJECT_ID }}'
+          FIREBASE_PRIVATE_KEY_ID: '${{ secrets.FIREBASE_PRIVATE_KEY_ID }}'
+          FIREBASE_PRIVATE_KEY: '${{ secrets.FIREBASE_PRIVATE_KEY }}'
+          FIREBASE_CLIENT_EMAIL: '${{ secrets.FIREBASE_CLIENT_EMAIL }}'
+          FIREBASE_CLIENT_ID: '${{ secrets.FIREBASE_CLIENT_ID }}'
+          FIREBASE_AUTH_URI: '${{ secrets.FIREBASE_AUTH_URI }}'
+          FIREBASE_TOKEN_URI: '${{ secrets.FIREBASE_TOKEN_URI }}'
+          FIREBASE_AUTH_PROVIDER_X509_CERT_URL: '${{ secrets.FIREBASE_AUTH_PROVIDER_X509_CERT_URL }}'
+          FIREBASE_CLIENT_X509_CERT_URL: '${{ secrets.FIREBASE_CLIENT_X509_CERT_URL }}'
+          FIREBASE_UNIVERSE_DOMAIN: '${{ secrets.FIREBASE_UNIVERSE_DOMAIN }}'
           NODE_ENV: test

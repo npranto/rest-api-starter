@@ -2,7 +2,7 @@ const request = require('supertest');
 
 const APP = `http://localhost:${process.env.PORT || 9000}`;
 
-describe('API: All Endpoints', () => {
+describe('API: All Endpoints w/ Firestore', () => {
   let TEST_DATA = null;
 
   it('should return healthcheck status message', async () => {
@@ -25,11 +25,12 @@ describe('API: All Endpoints', () => {
 
     expect(response.status).toBe(201);
     expect(response.body.message).toBe('Data Creation: SUCCESS 🚀');
-    expect(response.body.data).toHaveProperty('_id');
+    expect(response.body.data).toHaveProperty('id');
     expect(response.body.data.type).toBe(newData.type);
     expect(response.body.data.data).toEqual(newData.data);
 
     // store created data for future tests
+    console.log(JSON.stringify(response.body.data, null, 2));
     TEST_DATA = response.body.data;
   });
 
@@ -43,11 +44,11 @@ describe('API: All Endpoints', () => {
   });
 
   it('should retrieve data by ID from database', async () => {
-    const response = await request(APP).get(`/api/v1/data/${TEST_DATA._id}`);
+    const response = await request(APP).get(`/api/v1/data/${TEST_DATA.id}`);
 
     expect(response.status).toBe(200);
     expect(response.body.message).toBe('Data Retrieval By Id: SUCCESS 🚀');
-    expect(response.body.data._id).toBe(TEST_DATA._id);
+    expect(response.body.data.id).toBe(TEST_DATA.id);
     expect(response.body.data.type).toBe(TEST_DATA.type);
   });
 
@@ -59,22 +60,22 @@ describe('API: All Endpoints', () => {
     };
 
     const response = await request(APP)
-      .patch(`/api/v1/data/${TEST_DATA._id}`)
+      .patch(`/api/v1/data/${TEST_DATA.id}`)
       .send(updatedData)
       .set('Content-Type', 'application/json');
 
     expect(response.status).toBe(200);
     expect(response.body.message).toBe('Data Update By Id: SUCCESS 🚀');
-    expect(response.body.data._id).toBe(TEST_DATA._id);
+    expect(response.body.data.id).toBe(TEST_DATA.id);
     expect(response.body.data.type).toBe(TEST_DATA.type);
     expect(response.body.data.data).toEqual(updatedData.data);
   });
 
   it('should delete data by ID from database', async () => {
-    const response = await request(APP).delete(`/api/v1/data/${TEST_DATA._id}`);
+    const response = await request(APP).delete(`/api/v1/data/${TEST_DATA.id}`);
 
     expect(response.status).toBe(200);
     expect(response.body.message).toBe('Data Deletion By Id: SUCCESS 🚀');
-    expect(response.body.data._id).toBe(TEST_DATA._id);
+    expect(response.body.data.id).toBe(TEST_DATA.id);
   });
 });
