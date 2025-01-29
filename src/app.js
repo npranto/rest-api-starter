@@ -29,6 +29,7 @@ app.get('/', (_, res) =>
   res.status(200).json({
     message: 'Welcome to Rest API Starter!',
     env: process.env.NODE_ENV,
+    database: process.env.DATABASE,
     version: require('../package.json')?.version,
   })
 );

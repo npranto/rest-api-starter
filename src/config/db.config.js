@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
+const { db, connectToFirestore } = require('./firestore.config');
 
 const MONGODB = 'mongodb';
+const FIRESTORE = 'firestore';
 
 /**
  * Connects to MongoDB using the URI from environment variables.
@@ -32,9 +34,16 @@ const connectToMongoDB = async () => {
  * @returns {void}
  */
 const connect = ({ database = process.env.DATABASE } = {}) => {
-  if (database === MONGODB) connectToMongoDB();
+  if (database === MONGODB) return connectToMongoDB();
+  else if (database === FIRESTORE) return connectToFirestore();
+  else {
+    console.error('No database has been configured 🚨');
+    process.exit(1);
+  }
 };
 
 module.exports = {
   connect,
+  MONGODB,
+  FIRESTORE,
 };

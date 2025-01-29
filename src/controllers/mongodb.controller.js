@@ -1,7 +1,4 @@
 const DataModel = require('../models/data.model');
-const FireStoreController = require('../controllers/firestore.controller');
-const MONGODBController = require('../controllers/mongodb.controller');
-const { MONGODB, FIRESTORE } = require('../config/db.config');
 
 /**
  * Creates a new data entry in the database.
@@ -14,10 +11,25 @@ const { MONGODB, FIRESTORE } = require('../config/db.config');
  * @returns {void}
  * @throws {Error} Logs error if data creation fails.
  */
-exports.createData = (...args) => {
-  const DATABASE = process.env.DATABASE;
-  if (DATABASE === MONGODB) return MONGODBController.createData(...args);
-  if (DATABASE === FIRESTORE) return FireStoreController.createData(...args);
+exports.createData = async (req, res) => {
+  try {
+    const { type, data, metadata } = req.body || {};
+    const newData = new DataModel({
+      type,
+      data,
+      metadata,
+    });
+    await newData.save();
+    res.status(201).json({
+      message: 'Data Creation: SUCCESS 🚀',
+      data: newData,
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: 'Data Creation: FAILED 🚨',
+      error: error?.message || 'Unable to create data 😢',
+    });
+  }
 };
 
 /**
@@ -31,10 +43,20 @@ exports.createData = (...args) => {
  * @returns {void}
  * @throws {Error} Logs error if data retrieval fails.
  */
-exports.getAllData = async (...args) => {
-  const DATABASE = process.env.DATABASE;
-  if (DATABASE === MONGODB) return MONGODBController.getAllData(...args);
-  if (DATABASE === FIRESTORE) return FireStoreController.getAllData(...args);
+exports.getAllData = async (req, res) => {
+  try {
+    const filter = req.query?.type ? { type: req.query.type } : {};
+    const allData = await DataModel.find(filter);
+    res.status(200).json({
+      message: 'Data Retrieval By Type: SUCCESS 🚀',
+      data: allData,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: 'Data Retrieval By Type: FAILED 🚨',
+      error: error?.message || 'Unable to get data by type 😢',
+    });
+  }
 };
 
 /**
