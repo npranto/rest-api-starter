@@ -18,19 +18,6 @@ const colors = {
   debug: 'white',
 };
 
-/**
- * Returns the current log level based on the environment.
- * Defaults to 'debug' for development and 'warn' for production.
- *
- * @function getCurrentLoglevel
- * @returns {string} The log level for the current environment.
- */
-const getCurrentLoglevel = () => {
-  const logLevel = process.env.LOG_LEVEL;
-  const env = process.env.NODE_ENV || 'development';
-  return logLevel || env === 'development' ? 'debug' : 'warn';
-};
-
 // sets custom colors for diff log levels
 winston.addColors(colors);
 
@@ -60,7 +47,7 @@ const transports = [
  * @type {winston.Logger}
  */
 const logger = winston.createLogger({
-  level: getCurrentLoglevel(),
+  level: process.env.NODE_ENV === 'development' ? 'debug' : 'warn',
   levels,
   format,
   transports,

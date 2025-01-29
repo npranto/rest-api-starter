@@ -44,6 +44,7 @@ const start = async () => {
     res.status(200).json({
       message: 'Welcome to Rest API Starter!',
       env: process.env.NODE_ENV,
+      logLevel: process.env.NODE_ENV === 'development' ? 'debug' : 'warn',
       database: process.env.DATABASE,
       version: require('../package.json')?.version,
     });
