@@ -1,4 +1,5 @@
 const rateLimit = require('express-rate-limit');
+const logger = require('./logger.middleware');
 
 /**
  * Rate limiter middleware to limit number of requests a user can make to API.

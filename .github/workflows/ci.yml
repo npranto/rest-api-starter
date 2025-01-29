@@ -35,6 +35,7 @@ jobs:
           sleep 10 # Allow server to stabilize
         env:
           PORT: '${{ secrets.PORT }}'
+          LOG_LEVEL: '${{ secrets.LOG_LEVEL }}'
           DATABASE: '${{ secrets.DATABASE }}'
           MONGO_URI: '${{ secrets.MONGO_URI }}'
           FIREBASE_TYPE: '${{ secrets.FIREBASE_TYPE }}'
@@ -53,6 +54,7 @@ jobs:
         run: npm run test:api:mongodb
         env:
           PORT: '${{ secrets.PORT }}'
+          LOG_LEVEL: '${{ secrets.LOG_LEVEL }}'
           DATABASE: '${{ secrets.DATABASE }}'
           MONGO_URI: '${{ secrets.MONGO_URI }}'
           FIREBASE_TYPE: '${{ secrets.FIREBASE_TYPE }}'
