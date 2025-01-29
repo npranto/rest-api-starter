@@ -32,13 +32,11 @@ const rateLimiter = ({
   rateLimit({
     windowMs: rateLimitInMilliseconds, // 1 minute
     max: maxRequestsAllowed, // limits each IP to 100 requests per window (or, every 1 min)
-    handler: (_, res) => {
-      logger.warn(`Rate limit exceeded for IP: ${req.ip} - Too many requests!`);
+    handler: (_, res) =>
       res.status(429).json({
         message:
           'Wooh! Too many requests! 🐌 Slow down and try again in a minute 🙂',
-      });
-    },
+      }),
     standardHeaders: true, // returns rate limit info in `RateLimit-*` headers
     legacyHeaders: false, // disables the `X-RateLimit-*` headers
   });

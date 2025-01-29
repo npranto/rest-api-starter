@@ -30,7 +30,6 @@ describe('API: All Endpoints w/ Firestore', () => {
     expect(response.body.data.data).toEqual(newData.data);
 
     // store created data for future tests
-    console.log(JSON.stringify(response.body.data, null, 2));
     TEST_DATA = response.body.data;
   });
 
