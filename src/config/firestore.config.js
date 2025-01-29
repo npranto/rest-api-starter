@@ -17,7 +17,7 @@ initializeApp({
   }),
 });
 
-const db = getFirestore();
+const FirestoreDB = getFirestore();
 
 /**
  * Connects to Firestore.
@@ -32,4 +32,4 @@ const connectToFirestore = async () => {
   }
 };
 
-module.exports = { db, connectToFirestore };
+module.exports = { FirestoreDB, connectToFirestore };

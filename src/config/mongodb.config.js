@@ -31,6 +31,26 @@ const dataSchema = new mongoose.Schema(
  *
  * @type {mongoose.Model<Data>}
  */
-const DataModel = mongoose.model('Data', dataSchema);
+const MongooseDataModel = mongoose.model('Data', dataSchema);
 
-module.exports = DataModel;
+/**
+ * Connects to MongoDB using the URI from environment variables.
+ * Logs a success or failure message to the console.
+ * Exits the process if the connection fails.
+ *
+ * @async
+ * @function connectToMongoDB
+ * @throws {Error} Throws an error if the connection to MongoDB fails.
+ * @returns {Promise<void>} Resolves if the connection is successful.
+ */
+const connectToMongoDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log('MongoDB Connection: SUCCESS 🚀');
+  } catch (error) {
+    console.error('MongoDB Connection: FAILED 🚨', error);
+    process.exit(1);
+  }
+};
+
+module.exports = { MongooseDataModel, connectToMongoDB };

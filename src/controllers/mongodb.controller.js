@@ -1,4 +1,4 @@
-const DataModel = require('../models/data.model');
+const { MongooseDataModel } = require('../config/mongodb.config');
 
 /**
  * Creates a new data entry in the database.
@@ -13,8 +13,8 @@ const DataModel = require('../models/data.model');
  */
 exports.createData = async (req, res) => {
   try {
-    const { type, data, metadata } = req.body || {};
-    const newData = new DataModel({
+    const { type, data, metadata = {} } = req.body || {};
+    const newData = new MongooseDataModel({
       type,
       data,
       metadata,
@@ -46,7 +46,7 @@ exports.createData = async (req, res) => {
 exports.getAllData = async (req, res) => {
   try {
     const filter = req.query?.type ? { type: req.query.type } : {};
-    const allData = await DataModel.find(filter);
+    const allData = await MongooseDataModel.find(filter);
     res.status(200).json({
       message: 'Data Retrieval By Type: SUCCESS 🚀',
       data: allData,
@@ -72,7 +72,7 @@ exports.getAllData = async (req, res) => {
  */
 exports.getData = async (req, res) => {
   try {
-    const data = await DataModel.findById(req.params?.id);
+    const data = await MongooseDataModel.findById(req.params?.id);
     if (!data) {
       return res.status(404).json({
         message: 'Data Retrieval By Id: FAILED 🚨',
@@ -105,7 +105,7 @@ exports.getData = async (req, res) => {
 exports.updateData = async (req, res) => {
   try {
     const { type, data, metadata } = req.body || {};
-    const updatedData = await DataModel.findByIdAndUpdate(
+    const updatedData = await MongooseDataModel.findByIdAndUpdate(
       req.params?.id,
       { $set: { type, data, metadata } },
       { new: true, runValidators: true }
@@ -141,7 +141,9 @@ exports.updateData = async (req, res) => {
  */
 exports.deleteData = async (req, res) => {
   try {
-    const deletedData = await DataModel.findByIdAndDelete(req.params?.id);
+    const deletedData = await MongooseDataModel.findByIdAndDelete(
+      req.params?.id
+    );
     if (!deletedData) {
       return res.status(404).json({
         message: 'Data Deletion By Id: FAILED 🚨',
