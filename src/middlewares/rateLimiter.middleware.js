@@ -39,6 +39,7 @@ const rateLimiter = ({
       }),
     standardHeaders: true, // returns rate limit info in `RateLimit-*` headers
     legacyHeaders: false, // disables the `X-RateLimit-*` headers
+    validate: { xForwardedForHeader: false },
   });
 
 module.exports = rateLimiter;
