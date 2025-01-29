@@ -28,13 +28,7 @@ const colors = {
 const getCurrentLoglevel = () => {
   const logLevel = process.env.LOG_LEVEL;
   const env = process.env.NODE_ENV || 'development';
-  return (logLevel &&
-    Object.keys(levels).some(
-      (level) => level.toLowerCase() === logLevel.toLowerCase()
-    )) ||
-    env === 'development'
-    ? 'debug'
-    : 'warn';
+  return logLevel || env === 'development' ? 'debug' : 'warn';
 };
 
 // sets custom colors for diff log levels
