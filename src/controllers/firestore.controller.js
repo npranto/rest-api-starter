@@ -131,7 +131,7 @@ exports.updateData = async (req, res) => {
     const { type, data, metadata = {} } = req.body || {};
     const docRef = FirestoreDB.collection(COLLECTION_NAME).doc(req.params?.id);
 
-    logger.http(`PUT: /api/v1/data/${req.params.id} - IP: ${req.ip}`);
+    logger.http(`PATCH: /api/v1/data/${req.params.id} - IP: ${req.ip}`);
     logger.info(
       `REQUEST_BODY: [type: ${type}, data: ${JSON.stringify(data)}, metadata: ${JSON.stringify(metadata)}]`
     );
